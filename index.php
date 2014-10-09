@@ -16,8 +16,8 @@ $mu = new Munin;
 	<link href="./flot/examples/examples.css" rel="stylesheet" type="text/css">
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="flot/excanvas.min.js"></script><![endif]-->
 	<script language="javascript" type="text/javascript" src="flot/jquery.js"></script>
-	<script language="javascript" type="text/javascript" src="flot/jquery.flot.js"></script>
-	<script language="javascript" type="text/javascript" src="flot/updater.js"></script>
+	<script language="javascript" type="text/javascript" src="flot/jquery.jqplot.min.js"></script>
+
 
 
 <title>Munin live updater</title>
@@ -63,18 +63,43 @@ $mu = new Munin;
   var ip = $( "#ip" ).val();
   var plugin = $( "#plugin" ).val();
   var url ="ajax.php?ip=" + ip + "&plugin=" + plugin;
-  var stat = [];
+  var stat = {};
+  
   var points = 60*15;
+  var plot = false;
 function fetchData(){
  $.get( url, function( data ) {
-  data = "<br>" + data[0][1];
-  if(stat.length>=points){
-	stat.shift();
+	var i, plotData = [];
+	for(i = 0; i < data.length; i++){
+		if(!stat[data[i][0]]){
+			stat[data[i][0]] = [];
+		}
+		
+		stat[data[i][0]].push(parseInt(data[i][1],10));
+		if(stat[data[i][0]].length>=points){
+			stat[data[i][0]].shift();
+		}
+	}
+  
+	for(i in stat){
+		if(!stat.hasOwnProperty(i)){
+			continue;
+		}
+		plotData.push(stat[i]);
+	}
+  
+  console.log(plotData);
+  if(!plot){
+	plot = $.jqplot("placeholder", plotData);
+  } else{
+	plot.data = plotData;
+	plot.redraw();
   }
-  stat.push(data);
-  $( "div.demo-container" )
-    .html( "<br>" +stat);
-    setTimeout(fetchData, 1000);
+  
+  
+  
+  
+  setTimeout(fetchData, 1000);
  }, "json" );
 };
 fetchData(url);
