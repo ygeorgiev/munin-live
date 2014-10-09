@@ -36,7 +36,7 @@ class Munin
                 $out = socket_read($socket, 2048); //munin version
                 $in = "fetch ".$plugin."\n";
                 socket_write($socket, $in, strlen($in));
-                //$out = socket_read($socket, 4096);
+                //$out2 = socket_read($socket, 4096);
 		while('.' != trim($out=@socket_read($socket,1024,PHP_NORMAL_READ))){
  			$out2 .= $out;
 		}
