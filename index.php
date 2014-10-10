@@ -47,6 +47,18 @@ $mu = new Munin;
 		echo '</select>';
 	}
 	?>
+	<?php
+	if($_GET['ip'])
+	{
+		echo '<select id="rt" name="rt" onchange="this.form.submit();">';
+		echo "\n\t".'<option '.($plugin==$_GET['rt'] ? 'selected':''). ' value="60">060 points</option>';
+		echo "\n\t".'<option '.($plugin==$_GET['rt'] ? 'selected':''). ' value="120">120 points</option>';
+		echo "\n\t".'<option '.($plugin==$_GET['rt'] ? 'selected':''). ' value="180">180 points</option>';
+		echo "\n\t".'<option '.($plugin==$_GET['rt'] ? 'selected':''). ' value="300">300 points</option>';
+		echo '</select>';
+	}
+	?>
+
         </form>
 
         	<h1>Graph:</h1>
@@ -58,9 +70,11 @@ $mu = new Munin;
 <script type="text/javascript">
   var ip = $( "#ip" ).val();
   var plugin = $( "#plugin" ).val();
+  var rt = $( "#rt" ).val();
   var url ="ajax.php?ip=" + ip + "&plugin=" + plugin;
+  var gra = "Ploting  " + ip + " (" + plugin + ")";
   var stat = {};
-  var points = 60;
+  var points = rt;
   var plot = false;
   var fetchIndex = 1;
 
@@ -84,12 +98,25 @@ fetchData = function(){
 		}
 		plotData.push(stat[i]);
 	}
-   if(!plot){
-     plot = $.jqplot("placeholder", plotData);
-   } else {
+   if(plot){
      plot.destroy();
-      plot = $.jqplot("placeholder", plotData);
    }
+    plot = $.jqplot("placeholder", plotData, {
+      title: gra,
+      axesDefaults: {
+        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+      },
+      axes: {
+        xaxis: {
+          pad: 0,
+          showTicks: false,
+	  showTickMarks:false,
+        },
+        yaxis: {
+          label: ""
+        }
+      }
+    });
     setTimeout(fetchData, 1000);
  }, "json" );
 };
