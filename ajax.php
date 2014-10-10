@@ -5,12 +5,10 @@ function formatBs($size, $precision = 2)
     $base = log($size) / log(1024);
     $suffixes = array('', 'k', 'M', 'G', 'T');   
     return round(pow(1024, $base - floor($base)), $precision);
-//    return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
 }
 
 $i=0;
-$mu = new Munin;
-$arr1 = explode("\n", $mu->GetPluginStat($_GET['ip'],$_GET['plugin'])); 
+$arr1 = explode("\n", Munin::GetPluginStat($_GET['ip'],$_GET['plugin'])); 
 foreach($arr1 as $value=>$k){
 	if($k!=''){
 		$k = str_replace('.value','',$k);
@@ -26,6 +24,5 @@ foreach($arr1 as $value=>$k){
 $i++;
 }
 echo json_encode($arr3);
-
 ?>
 
