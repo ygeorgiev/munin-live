@@ -9,7 +9,7 @@ function formatBs($size, $precision = 2)
 //    return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
 }
 
-
+$i=0;
 $mu = new Munin;
 $arr1 = explode("\n", $mu->GetPluginStat($_GET['ip'],$_GET['plugin'])); 
 foreach($arr1 as $value=>$k){
@@ -18,11 +18,13 @@ foreach($arr1 as $value=>$k){
 		$k=preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $k);
 		$arr2[] =explode(" ",$k);
 		$arr2[0][1]=formatBs($arr2[0][1]);
-		$arr3[]=$arr2;
+		$arr3[$i][0]=$arr2[0][0];
+		$arr3[$i][1]=$arr2[0][1];
 		unset($arr2);
 	}else{
 		unset($arr1[$k]);
 	}
+$i++;
 }
 echo json_encode($arr3);
 
