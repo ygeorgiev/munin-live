@@ -1,4 +1,3 @@
-<pre>
 <?php 
 include 'init.php';
 function formatBs($size, $precision = 2)

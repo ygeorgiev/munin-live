@@ -18,8 +18,6 @@ $mu = new Munin;
 	<script language="javascript" type="text/javascript" src="flot/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="flot/jquery.jqplot.min.js"></script>
 
-
-
 <title>Munin live updater</title>
 </head>
 <body>
@@ -64,8 +62,8 @@ $mu = new Munin;
   var plugin = $( "#plugin" ).val();
   var url ="ajax.php?ip=" + ip + "&plugin=" + plugin;
   var stat = {};
-  
   var points = 60*15;
+
   var plot = false;
 function fetchData(){
  $.get( url, function( data ) {
