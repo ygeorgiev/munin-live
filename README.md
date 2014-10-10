@@ -1,7 +1,7 @@
 munin-live
 ==========
 
-Shows real time statistics
+Show real time statistics over munin protocol
 
 todo
 ==========
