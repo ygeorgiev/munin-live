@@ -51,10 +51,10 @@ $mu = new Munin;
 	if($_GET['ip'])
 	{
 		echo '<select id="rt" name="rt" onchange="this.form.submit();">';
-		echo "\n\t".'<option '.($plugin==$_GET['rt'] ? 'selected':''). ' value="60">060 points</option>';
-		echo "\n\t".'<option '.($plugin==$_GET['rt'] ? 'selected':''). ' value="120">120 points</option>';
-		echo "\n\t".'<option '.($plugin==$_GET['rt'] ? 'selected':''). ' value="180">180 points</option>';
-		echo "\n\t".'<option '.($plugin==$_GET['rt'] ? 'selected':''). ' value="300">300 points</option>';
+		echo "\n\t".'<option '.(60==$_GET['rt'] ? 'selected':''). ' value="60">060 points</option>';
+		echo "\n\t".'<option '.(120==$_GET['rt'] ? 'selected':''). ' value="120">120 points</option>';
+		echo "\n\t".'<option '.(180==$_GET['rt'] ? 'selected':''). ' value="180">180 points</option>';
+		echo "\n\t".'<option '.(300==$_GET['rt'] ? 'selected':''). ' value="300">300 points</option>';
 		echo '</select>';
 	}
 	?>
